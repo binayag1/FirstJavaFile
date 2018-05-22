@@ -163,9 +163,7 @@ import java.util.Scanner;
 				else {
 					System.out.println("Sorting data by Hours:");	
 					al.sort(Comparator.comparing(Storage::getHours));
-					for(int i=0;i<al.size();i++) {
-						System.out.println(al.get(i));
-					}
+					display();
 				}
 			}
 		
@@ -176,9 +174,7 @@ import java.util.Scanner;
 				else {
 					System.out.println("Sorting data by name");	
 					al.sort(Comparator.comparing(Storage::getName));
-					for(int i=0;i<al.size();i++) {
-						System.out.println(al.get(i));
-					}
+					display();
 				}
 			}
 		
