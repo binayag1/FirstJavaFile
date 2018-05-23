@@ -1,59 +1,79 @@
+//The program is about employee data manager. A console program which takes choice of user and do the task accordingly
 		import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Scanner;		
+		import java.util.Comparator;
+		import java.util.Scanner;		
 		public class EmployeeDataManager {
 			public static ArrayList<Storage> al=new ArrayList<Storage>();
 //			main method
 			public static void main(String args[]) {
 //				declaring variables
 				int choice=0;
-				int choice2=0;
+				boolean readData=false;
 				Scanner sc2=new Scanner(System.in);
 //				displaying message
-				System.out.println("        Employee Data Manager       ");
-				System.out.println("--------------------------------------");
-				System.out.println("1.Input and validate data ");
-				System.out.println("2.Display");
-				System.out.println("3.Sort By Name");
-				System.out.println("4.Sort By Hours");
-				System.out.println("5.Search By Name");
-				System.out.println("6.Search By Hours");
-				System.out.println("7.Statistics ");
-				System.out.println("8.Exit");
-				try {
-				
-				System.out.println("Enter oprion 1-8");
-				choice=sc2.nextInt();
-				}
-				catch(Exception e) {
-					System.out.println(e.getMessage());
-				}
 				do {
+					System.out.println("        Employee Data Manager       ");
+					System.out.println("--------------------------------------");
+					System.out.println("1.Input and validate data ");
+					System.out.println("2.Display");
+					System.out.println("3.Sort By Name");
+					System.out.println("4.Sort By Hours");
+					System.out.println("5.Search By Name");
+					System.out.println("6.Search By Hours");
+					System.out.println("7.Statistics ");
+					System.out.println("8.Exit");
+					try {
+					
+					System.out.println("Enter oprion 1-8");
+					choice=sc2.nextInt();
+					}
+					catch(Exception e) {
+						System.out.println(e.getMessage());
+					}
 					switch(choice) {
 					case 1:
 //						Taking 5 inputs
-						for(int i=0;i<5;i++)
+						for(int i=0;i<3;i++)
 						inputAndvalidate();
+						readData=true;
 						break;
 						
 					case 2:
-						display();
+						if(readData)
+							display();
+						else
+							errorMessage();
 						break;
 					case 3:
-						sortByName();
+						if(readData)
+							sortByName();
+						else
+							errorMessage();
 						break;
 					case 4:
-						sortByHours();
+						if(readData)
+							sortByHours();
+						else
+							errorMessage();
 						break;
 					case 5:
-						searchByName();
+						if(readData)
+							searchByName();
+						else
+							errorMessage();
 						break;
 					case 6:
-						searchByHours();
+						if(readData)
+							searchByHours();
+						else
+							errorMessage();
 						break;
 		
 					case 7:
-						statistics();
+						if(readData)
+							statistics();
+						else
+							errorMessage();
 						break;
 		
 					case 8:
@@ -63,26 +83,17 @@ import java.util.Scanner;
 					default:
 						System.out.println("You selected wrong choice");
 					}
-					try {
-					System.out.println("Enter Option 1-8:");
-					choice2=sc2.nextInt();
-					choice=choice2;
-					}
-					catch(Exception e) {
-						System.out.println(e.getCause());
-					}
-					System.out.println(choice);
-				}while(choice>0 && choice<9);
+				}while(choice!=8);
 				System.out.println("Something went wrong.....!!!");
-				
-		
 			}
 		
+			private static void errorMessage() {
+				System.out.println("No data to display");
+	
+			}
+
 			private static void statistics() {
-				if(al.isEmpty()) {
-					System.out.println("No data to display");
-				}
-				else {
+				
 					int max=0;
 					int min=0;
 					String minName="";
@@ -92,29 +103,27 @@ import java.util.Scanner;
 							min=al.get(i).getHours();
 							max=al.get(i).getHours();
 						}
-						if(min>al.get(i).getSalary()) {
+						if(min>al.get(i).getHours()) {
 							min=al.get(i).getHours();
 							minName=al.get(i).getName();
+							System.out.println(minName);
 						}
-						if(max<al.get(i).getSalary()) {
-							max=al.get(i).getSalary();
+						if(max<al.get(i).getHours()) {
+							max=al.get(i).getHours();
 							maxName=al.get(i).getName();
 							
 						}
 					}
+
 					System.out.println("Statistics");
-					System.out.println("Maximum salary is :"+max+"Name of person getting maximum salary is :"+maxName);
-					System.out.println("Minumum salary is :"+min+"Name of person getting minimum salry is: "+minName);
+					System.out.println("Maximum salary is :"+max+ "Name of person getting maximum salary is :"+maxName);
+					System.out.println("Minumum salary is :"+min+ "Name of person getting minimum salry is: "+minName);
 					
 				
-					}
+					
 			}
 		
 			private static void searchByHours() {
-				if(al.isEmpty()) {
-					System.out.println("no data to search");
-				}
-				else {
 					System.out.println("Searching hours in list");
 					Scanner sc=new Scanner(System.in);
 					int hours;
@@ -129,15 +138,11 @@ import java.util.Scanner;
 					if(count==0) {
 						System.out.println("no hours found in the list");
 					}
-				}
+				
 				
 			}
 		
 			private static void searchByName() {
-				if(al.isEmpty()) {
-					System.out.println("no data to search");
-				}
-				else {
 					System.out.println("Searching name in list");
 					Scanner sc=new Scanner(System.in);
 					String name;
@@ -153,41 +158,26 @@ import java.util.Scanner;
 					if(count==0) {
 						System.out.println("No data found in the list");
 					}
-				}
 			}
 		
 			private static void sortByHours() {
-				if(al.isEmpty()) {
-					System.out.println("No data to sort");
-				}
-				else {
 					System.out.println("Sorting data by Hours:");	
 					al.sort(Comparator.comparing(Storage::getHours));
 					display();
-				}
 			}
 		
 			private static void sortByName() {
-				if(al.isEmpty()) {
-					System.out.println("No data to sort");
-				}
-				else {
 					System.out.println("Sorting data by name");	
 					al.sort(Comparator.comparing(Storage::getName));
 					display();
-				}
+					
 			}
 		
 			private static void display() {
-				if(al.isEmpty()) {
-					System.out.println("No data to display");
-				}
-				else {
 					System.out.println("Displaying Data");
 					for(int i=0;i<al.size();i++) {
 						System.out.println("Name :"+al.get(i).getName()+"Hours :"+al.get(i).getHours()+"Salary:"+al.get(i).salary);
 					}
-				}
 			}
 		
 			private static void inputAndvalidate() {
@@ -200,8 +190,10 @@ import java.util.Scanner;
 				while(true) {
 					System.out.println("Please enter employee name: ");
 					name=sc1.nextLine();
-					if(validate(name)==false)
+					if(validate(name)==false) {
+						name="";
 						continue OUTER;
+					}
 					else {
 						break OUTER;
 					}
@@ -210,8 +202,19 @@ import java.util.Scanner;
 				while(true) {
 					System.out.println("Please enter hours");
 					hours=sc1.nextInt();
+//					String check=String.valueOf(hours);
+//					char c='a';
+//					for(int i=0;i<check.length();i++) {
+//						if(Character.isDigit(c)==true) {
+//							System.out.println("Hours should be in interger format:");
+//							continue OUTER1;
+//						}
+//					}
 					if(validateHours(hours)==false)
+					{
+						hours=0;
 						continue OUTER1;
+					}
 					else
 						break OUTER1;
 				}
@@ -230,16 +233,31 @@ import java.util.Scanner;
 			}
 		
 			private static boolean validate(String naam) {
-				if(!naam.contains(" ")||naam.length()>25) {
-					System.out.println("Invalid Name");
+				String[] token=naam.split(" ");
+				int size=token.length;
+				System.out.println(size);
+				char c='a';
+				if(size!=2) {
 					return false;
 				}
-				else
-					return true;
+				String part1=token[0];
+				String part2=token[1];
+				for(int i=0;i<part1.length();i++) {
+					c=part1.charAt(i);
+					if(Character.isLetter(c)==false)
+						return false;
+				}
+				for(int i=0;i<part2.length();i++) {
+					c=part2.charAt(i);
+					if(Character.isLetter(c)==false) {
+						return false;
+					}
+				}
+				return true;
 				
 			}
 			private static boolean validateHours(int hours) {
-				if(hours>60 || hours <0) {
+				if(hours>60 || hours <0) { 
 					return false;
 				}
 				else
